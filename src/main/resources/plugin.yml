@@ -1,0 +1,13 @@
+name: MfsjeaMC
+version: @version@
+main: io.github.ranolp.mfsjeamc.MfsjeaMC
+author: Ranol_
+description: mfsjea.jvm for Spigot
+command:
+  enko:
+    aliases: [영한, mfsjea, dudgks]
+    description: "영타 → 한타 변환을 끄거나 켭니다, 혹은 메시지를 변환합니다."
+command:
+  keyboard:
+    aliases: [키보드]
+    description: "입력/출력 키보드를 고정합니다."
