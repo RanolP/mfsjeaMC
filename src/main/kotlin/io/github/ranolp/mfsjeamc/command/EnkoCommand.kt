@@ -44,12 +44,13 @@ object EnkoCommand : CommandExecutor {
 
             val message = createMessage(
                 "<${sender.name}> ${converted.sentence}",
-                "${ChatColor.GRAY}${ChatColor.ITALIC}원문 : ${args.joinToString(" ")}, 점수 : ${converted.score}"
+                "${ChatColor.GRAY}${ChatColor.ITALIC}원문 : ${args.joinToString(" ")}, ${converted.source.name} - ${converted.target.name}, 점수 : ${converted.score}"
             )
 
             for (player in Bukkit.getOnlinePlayers()) {
                 player.spigot().sendMessage(ChatMessageType.CHAT, message)
             }
+            Bukkit.getConsoleSender().sendMessage("<${sender.name}> ${converted.sentence}")
         }
         return true
     }
