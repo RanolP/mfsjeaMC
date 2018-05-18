@@ -2,8 +2,7 @@ package io.github.ranolp.mfsjeamc.command
 
 import io.github.ranolp.mfsjea.Mfsjea
 import io.github.ranolp.mfsjeamc.Chatter
-import io.github.ranolp.mfsjeamc.createMessage
-import net.md_5.bungee.api.ChatMessageType
+import io.github.ranolp.mfsjeamc.sendMessage
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -42,15 +41,7 @@ object EnkoCommand : CommandExecutor {
                 Chatter(sender).jeamfs(args.joinToString(" "))
             }
 
-            val message = createMessage(
-                "<${sender.name}> ${converted.sentence}",
-                "${ChatColor.GRAY}${ChatColor.ITALIC}원문 : ${args.joinToString(" ")}, ${converted.source.name} - ${converted.target.name}, 점수 : ${converted.score}"
-            )
-
-            for (player in Bukkit.getOnlinePlayers()) {
-                player.spigot().sendMessage(ChatMessageType.CHAT, message)
-            }
-            Bukkit.getConsoleSender().sendMessage("<${sender.name}> ${converted.sentence}")
+            sendMessage(sender.name, "<%s> %s", args.joinToString(" "), converted, Bukkit.getOnlinePlayers())
         }
         return true
     }
