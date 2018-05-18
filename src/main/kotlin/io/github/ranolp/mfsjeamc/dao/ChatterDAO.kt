@@ -22,5 +22,6 @@ object ChatterDAO {
         yaml.save(file)
     }
 
+    @Suppress("UNCHECKED_CAST")
     internal fun get(uuid: UUID): Map<String, Any?> = yaml.get(uuid.toString()) as? Map<String, Any?> ?: emptyMap()
 }
