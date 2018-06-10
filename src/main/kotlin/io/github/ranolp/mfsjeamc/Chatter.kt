@@ -3,7 +3,8 @@ package io.github.ranolp.mfsjeamc
 import io.github.ranolp.mfsjea.ConversionResult
 import io.github.ranolp.mfsjea.Mfsjea
 import io.github.ranolp.mfsjea.escaper.BracketEscaper
-import io.github.ranolp.mfsjea.keyboard.*
+import io.github.ranolp.mfsjea.keyboard.InputKeyboard
+import io.github.ranolp.mfsjea.keyboard.OutputKeyboard
 import io.github.ranolp.mfsjeamc.dao.ChatterDAO
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -12,17 +13,6 @@ import java.util.*
 class Chatter private constructor(private val uuid: UUID) {
     companion object {
         private val CACHE = mutableMapOf<UUID, Chatter>()
-
-        private val inputKeyboards = listOf(
-            QwertyKeyboard,
-            DvorakKeyboard,
-            ColemakKeyboard
-        )
-        private val outputKeyboards = listOf(
-            DubeolStandardKeyboard,
-            Sebeol390Keyboard,
-            SebeolFinalKeyboard
-        )
 
         @JvmName("of")
         operator fun invoke(uuid: UUID) = CACHE.getOrPut(uuid) {
