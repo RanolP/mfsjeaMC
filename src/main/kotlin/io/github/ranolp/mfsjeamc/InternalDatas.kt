@@ -16,4 +16,4 @@ internal val outputKeyboards = listOf(
     SebeolFinalKeyboard
 )
 
-internal val outputKeyboardsMap = outputKeyboards.associateBy { it.name }
+internal val outputKeyboardsMap = outputKeyboards.associateBy { it.name.replace(' ', '-') }

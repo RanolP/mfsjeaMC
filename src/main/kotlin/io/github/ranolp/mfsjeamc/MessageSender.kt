@@ -16,7 +16,7 @@ fun sendMessage(
     recipients: Iterable<Player>
 ) {
     val component = TextComponent(format.format(senderName, converted.sentence))
-    if (original.split(" ").size == 1) {
+    if (!original.contains(' ')) {
         component.addExtra(TextComponent(original).also {
             it.color = ChatColor.GRAY
             it.isItalic = true
