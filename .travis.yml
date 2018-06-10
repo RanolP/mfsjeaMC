@@ -12,3 +12,12 @@ cache:
   - "$HOME/.sonar/cache"
   - "$HOME/.gradle"
   - ".gradle"
+before_deploy: "./gradlew prepareUpload"
+deploy:
+  provider: releases
+  api_key:
+    secure: xWFoLIzeA7AH4FHpdGV/xsi53F2BCoYXk/b2kccSQEW11Z/YsphWcQCpLAavPtIQQDg6tqoEVzLxa2oNOQwwmMLXqsNl4lFcCfOQ5ZiZnrrGpovAn8zubAs2BLaUSugdMZL2GiV9Xcyz/Ghkm/eYX7V0eNshaDWybPefGOIWtVz7hQCGDe91vHCXgVkPQ6v7b6+dUURmHlmR2i8F6iGN0UXk0IgbcuOpBS67NqF4//wfb9NjTLZYuA9z/hFuaSOZBTuxt/2a7R3K1ip1JXjzpm5I295H278wG6WErmfSG4hdrmQNHyihjBuSxm5ko95TP4giBywZDIl5jYag2tauJBAWoaKiococ8fYl2E+MnEMx6ynHtbn53y3Vf3wKFOAMjhaCB/sv6t8sGa+h5BSGiW7yAXRIUsr5fHKAJN+X+gbhyYUeWJJOOE+jPKELlNEsEYN2JrXGkRX2F9Tb+CeehNjmg22t88ZMaS+/EHqZQ4+eZtknVVN7yGy4/izDb2ewX7zQRwAdVX4Vqb/46pkSH1MgpmWj9Zfg+UI3N8GuByLwIUDe7W9j2cfMUplxV6/zWDjzgV05n8jSbZXYRabAU/puzZpgNPLH3sZ8PeQ4Q3rvR/yaRU2GzCB6hw5qHxPiTIOJDGGbbwI2gY+uhFConsAHbNUfI6uEzixarezzrbw=
+  file: 'build/libs/mfsjeaMC.jar'
+  on:
+    repo: RanolP/mfsjeaMC
+    tags: true

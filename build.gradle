@@ -61,3 +61,11 @@ processResources {
         filter ReplaceTokens, tokens: [version: version]
     }
 }
+
+
+task prepareUpload(type: Copy, dependsOn: ['build']) {
+    from "$buildDir/libs"
+    into "$buildDir/libs"
+    include "mfsjeaMC-${project.version}.jar"
+    rename "mfsjeaMC-${project.version}.jar", 'mfsjeaMC.jar'
+}
