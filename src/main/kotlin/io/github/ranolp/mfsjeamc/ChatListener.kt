@@ -24,14 +24,13 @@ object ChatListener : Listener {
 
         val converted = chatter.jeamfs(event.message)
 
-        val compatEvent =
-            MfsjeaCompatChatEvent(event.isAsynchronous, event.player, converted.sentence, event.recipients)
+        val compatEvent = MfsjeaCompatChatEvent(event.isAsynchronous, event.player, converted.sentence, event.recipients)
         Bukkit.getPluginManager().callEvent(compatEvent)
         if (!compatEvent.isCancelled) {
             sendMessage(
                 compatEvent.player.displayName,
                 compatEvent.format,
-                compatEvent.message,
+                event.message,
                 converted,
                 compatEvent.recipients
             )
