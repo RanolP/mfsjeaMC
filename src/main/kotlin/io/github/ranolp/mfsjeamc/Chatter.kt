@@ -75,18 +75,15 @@ class Chatter private constructor(private val uuid: UUID) {
         val inputKeyboard = this.inputKeyboard
         val outputKeyboard = this.outputKeyboard
 
-        var mfsjea = Mfsjea.DEFAULT.extend(escapers = {
+        mfsjea = mfsjea.extend(inputKeyboards = {
+            if (inputKeyboard !== null) listOf(inputKeyboard) else it
+        }, outputKeyboards = {
+            if (outputKeyboard !== null) listOf(outputKeyboard) else it
+        }, escapers = {
             listOf(BracketEscaper('[', ']'))
         })
 
-        if (inputKeyboard !== null) mfsjea = mfsjea.extend(inputKeyboards = {
-            listOf(inputKeyboard)
-        })
-        if (outputKeyboard !== null) mfsjea = mfsjea.extend(outputKeyboards = {
-            listOf(outputKeyboard)
-        })
-
-        this.mfsjea = mfsjea
+        save()
     }
 
     fun save() {
