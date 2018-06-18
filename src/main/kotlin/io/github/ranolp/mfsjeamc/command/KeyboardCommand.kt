@@ -21,7 +21,7 @@ object KeyboardCommand : TabExecutor {
             return true
         }
         if (args.isEmpty()) {
-            sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}/$label <input/output> [키보드 레이아웃 이름]로 사용해주세요!")
+            sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}/$label <input/output> [키보드 레이아웃 이름] 혹은 /$label state로 사용해주세요!")
             return true
         }
         val name = if (args.size > 1) args.copyOfRange(1, args.size).joinToString(" ") else ""
@@ -52,8 +52,14 @@ object KeyboardCommand : TabExecutor {
                     else -> sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}올바른 키보드 레이아웃 이름을 입력하세요. ${ChatColor.GRAY}(가능 레이아웃 이름 : ${outputKeyboardsMap.keys})")
                 }
             }
+            "state" -> {
+                val chatter = Chatter(sender)
+                sender.sendMessage("${ChatColor.GREEN}[#] ${ChatColor.WHITE}당신의 키보드 상태")
+                sender.sendMessage("   ${ChatColor.GRAY}입력 키보드 ${chatter.inputKeyboard?.name ?: "없음"}")
+                sender.sendMessage("   ${ChatColor.GRAY}출력 키보드 ${chatter.outputKeyboard?.name ?: "없음"}")
+            }
             else -> {
-                sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}/$label <input/output> [키보드 레이아웃 이름]로 사용해주세요!")
+                sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}/$label <input/output> [키보드 레이아웃 이름] 혹은 /$label state로 사용해주세요!")
             }
         }
         return true

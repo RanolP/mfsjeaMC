@@ -16,4 +16,9 @@ internal val outputKeyboards = listOf(
     SebeolFinalKeyboard
 )
 
-internal val outputKeyboardsMap = outputKeyboards.associateBy { it.name.replace(' ', '-') }
+internal val outputKeyboardsMap = outputKeyboards.associateBy { it.name.replace(' ', '-') } +
+        mapOf(
+            "Dubeol-Standard" to DubeolStandardKeyboard,
+            "Sebeol-390" to Sebeol390Keyboard,
+            "Sebeol-Final" to SebeolFinalKeyboard
+        )
