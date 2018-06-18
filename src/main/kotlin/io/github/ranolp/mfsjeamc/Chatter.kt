@@ -25,10 +25,10 @@ class Chatter private constructor(private val uuid: UUID) {
 
     init {
         val data = ChatterDAO.get(uuid)
-        data["useMfsjea"]?.takeIf { it !is Boolean }?.let {
+        data["useMfsjea"]?.takeIf { it is Boolean }?.let {
             useMfsjea = it as Boolean
         }
-        data["specified-input"]?.takeIf { it !is String }?.let {
+        data["specified-input"]?.takeIf { it is String }?.let {
             val name = it as String
             val keyboard = inputKeyboards.firstOrNull { it.name == name }
             if (keyboard == null) {
@@ -37,7 +37,7 @@ class Chatter private constructor(private val uuid: UUID) {
                 inputKeyboard = keyboard
             }
         }
-        data["specified-output"]?.takeIf { it !is String }?.let {
+        data["specified-output"]?.takeIf { it is String }?.let {
             val name = it as String
             val keyboard = outputKeyboards.firstOrNull { it.name == name }
             if (keyboard == null) {
