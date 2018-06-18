@@ -72,10 +72,10 @@ object KeyboardCommand : TabExecutor {
         args: Array<out String>
     ): List<String> {
         return if (args.isEmpty()) {
-            listOf("input", "output")
+            listOf("input", "output", "state")
         } else {
             when (args.size) {
-                1 -> listOf("input", "output").filter { it.startsWith(args[0]) }
+                1 -> listOf("input", "output", "state").filter { it.startsWith(args[0]) }
                 2 -> when {
                     args[0] == "input" -> inputKeyboardsMap.keys.filter {
                         it.toLowerCase().startsWith(args[1].toLowerCase())
