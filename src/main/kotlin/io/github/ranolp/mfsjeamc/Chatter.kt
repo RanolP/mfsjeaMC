@@ -25,7 +25,7 @@ class Chatter private constructor(private val uuid: UUID) {
 
     init {
         val data = ChatterDAO.get(uuid)
-        data["useMfsjea"]?.takeIf { it is Boolean }?.let {
+        data["use-mfsjea"]?.takeIf { it is Boolean }?.let {
             useMfsjea = it as Boolean
         }
         data["specified-input"]?.takeIf { it is String }?.let {
@@ -46,44 +46,46 @@ class Chatter private constructor(private val uuid: UUID) {
                 outputKeyboard = keyboard
             }
         }
+        updateMfsjea()
     }
 
     @get:JvmName("useMfsjea")
     @set:JvmName("useMfsjea")
     var useMfsjea: Boolean = true
+        set(value) {
+            field = value
+            save()
+        }
 
     @set:JvmName("specify")
     var inputKeyboard: InputKeyboard? = null
         set(value) {
             field = value
             updateMfsjea()
+            save()
         }
     @set:JvmName("specify")
     var outputKeyboard: OutputKeyboard? = null
         set(value) {
             field = value
             updateMfsjea()
+            save()
         }
 
     @get:JvmName("asPlayer")
     val asPlayer: Player
         get() = Bukkit.getPlayer(uuid)
 
-    private var mfsjea = Mfsjea.DEFAULT
+    private lateinit var mfsjea: Mfsjea
 
     private fun updateMfsjea() {
-        val inputKeyboard = this.inputKeyboard
-        val outputKeyboard = this.outputKeyboard
-
-        mfsjea = mfsjea.extend(inputKeyboards = {
-            if (inputKeyboard !== null) listOf(inputKeyboard) else it
+        mfsjea = Mfsjea.DEFAULT.extend(inputKeyboards = {
+            inputKeyboard?.let(::listOf) ?: it
         }, outputKeyboards = {
-            if (outputKeyboard !== null) listOf(outputKeyboard) else it
+            outputKeyboard?.let(::listOf) ?: it
         }, escapers = {
             listOf(BracketEscaper('[', ']'))
         })
-
-        save()
     }
 
     fun save() {
