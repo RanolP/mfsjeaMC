@@ -22,5 +22,5 @@ object ChatterDAO {
         yaml.save(file)
     }
 
-    internal fun get(uuid: UUID): Map<String, Any?> = yaml.getConfigurationSection(uuid.toString()).getValues(true)
+    internal fun get(uuid: UUID): Map<String, Any?> = yaml.getConfigurationSection(uuid.toString())?.getValues(true) ?: emptyMap()
 }
