@@ -29,7 +29,11 @@ class MfsjeaMC : JavaPlugin() {
         logger.info("${ChatColor.YELLOW}[#] ${ChatColor.WHITE}mfsjea의 업데이트를 확인합니다...")
 
         UpdateChecker.check(description, "RanolP", "mfsjeaMC", failure = {
-            logger.info("${ChatColor.GREEN}[#] ${ChatColor.WHITE}mfsjea가 최신 버전입니다.")
+            if (it == UpdateChecker.FailureReason.ALREADY_LATEST) {
+                logger.info("${ChatColor.GREEN}[#] ${ChatColor.WHITE}mfsjea가 최신 버전입니다.")
+            } else {
+                logger.severe(it.message)
+            }
         }) {
             releaseInfo = this
 
