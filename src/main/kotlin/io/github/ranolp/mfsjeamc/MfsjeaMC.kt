@@ -6,6 +6,7 @@ import io.github.ranolp.mfsjeamc.command.EnkoCommand
 import io.github.ranolp.mfsjeamc.command.KeyboardCommand
 import io.github.ranolp.mfsjeamc.dao.ChatterDAO
 import io.github.ranolp.mfsjeamc.web.UpdateChecker
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -25,19 +26,25 @@ class MfsjeaMC : JavaPlugin() {
         getCommand("enko").executor = EnkoCommand
         getCommand("keyboard").executor = KeyboardCommand
 
-        releaseInfo = UpdateChecker.check(description, "RanolP", "mfsjeaMC")
+        logger.info("${ChatColor.YELLOW}[#] ${ChatColor.WHITE}mfsjea의 업데이트를 확인합니다...")
 
-        releaseInfo?.let {
-            logger.info("${ChatColor.YELLOW}[!] ${ChatColor.WHITE}mfsjea의 새 업데이트가 있습니다.")
-            logger.info("  ${ChatColor.GRAY}${description.version} → ${it.version}")
+        UpdateChecker.check(description, "RanolP", "mfsjeaMC", failure = {
+            logger.info("${ChatColor.GREEN}[#] ${ChatColor.WHITE}mfsjea가 최신 버전입니다.")
+        }) {
+            releaseInfo = this
+
+            logger.info("${ChatColor.GOLD}[!] ${ChatColor.WHITE}mfsjea의 새 업데이트가 있습니다.")
+            logger.info("  ${ChatColor.GRAY}${description.version} → $version")
             logger.info("${ChatColor.AQUA}[업데이트 로그]")
-            it.updateLog.split('\n').map { "  ${it.trim()}" }.forEach(logger::info)
+            updateLog.split('\n').map { "  ${it.trim()}" }.forEach(logger::info)
             logger.info("${ChatColor.AQUA}[릴리즈 페이지]")
-            logger.info("  ${it.url}")
+            logger.info("  $url")
             logger.info("${ChatColor.AQUA}[다운로드]")
-            logger.info("  ${it.downloadUrl}")
+            logger.info("  $downloadUrl")
 
-            server.pluginManager.registerEvents(UpdateAlertListener, this)
+            Bukkit.getOnlinePlayers().forEach(UpdateAlertListener::alert)
+
+            server.pluginManager.registerEvents(UpdateAlertListener, this@MfsjeaMC)
         }
     }
 

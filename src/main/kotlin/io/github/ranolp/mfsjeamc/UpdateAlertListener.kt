@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.ChatColor
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -14,15 +15,13 @@ import net.md_5.bungee.api.ChatColor as BungeeChatColor
 object UpdateAlertListener : Listener {
     val notified = mutableListOf<UUID>()
 
-    @EventHandler
-    fun onJoin(event: PlayerJoinEvent) {
-        val player = event.player
+    fun alert(player: Player) {
         if (!player.isOp || player.uniqueId in notified) {
             return
         }
         notified += player.uniqueId
         MfsjeaMC.releaseInfo?.let {
-            player.sendMessage("${ChatColor.YELLOW}[!] ${ChatColor.WHITE}mfsjea의 새 업데이트가 있습니다.")
+            player.sendMessage("${ChatColor.GOLD}[!] ${ChatColor.WHITE}mfsjea의 새 업데이트가 있습니다.")
             player.sendMessage("  ${ChatColor.GRAY}${MfsjeaMC.getInstance().description.version} → ${it.version}")
             player.sendMessage("${ChatColor.AQUA}[업데이트 로그]")
             it.updateLog.split('\n').map { "  ${it.trim()}" }.forEach(player::sendMessage)
@@ -52,5 +51,10 @@ object UpdateAlertListener : Listener {
             }
             player.spigot().sendMessage(ChatMessageType.CHAT, releasePage, TextComponent(", "), download)
         }
+    }
+
+    @EventHandler
+    fun onJoin(event: PlayerJoinEvent) {
+        alert(event.player)
     }
 }
