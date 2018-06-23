@@ -3,6 +3,8 @@ package io.github.ranolp.mfsjeamc
 import io.github.ranolp.mfsjea.ConversionResult
 import io.github.ranolp.mfsjea.Mfsjea
 import io.github.ranolp.mfsjea.escaper.BracketEscaper
+import io.github.ranolp.mfsjea.grader.AsciiGrader
+import io.github.ranolp.mfsjea.grader.IncompleteWordGrader
 import io.github.ranolp.mfsjea.keyboard.InputKeyboard
 import io.github.ranolp.mfsjea.keyboard.OutputKeyboard
 import io.github.ranolp.mfsjeamc.dao.ChatterDAO
@@ -77,6 +79,7 @@ class Chatter private constructor(private val uuid: UUID) {
         get() = Bukkit.getPlayer(uuid)
 
     private lateinit var mfsjea: Mfsjea
+    private lateinit var mfsjeaForce: Mfsjea
 
     private fun updateMfsjea() {
         mfsjea = Mfsjea.DEFAULT.extend(inputKeyboards = {
@@ -85,6 +88,9 @@ class Chatter private constructor(private val uuid: UUID) {
             outputKeyboard?.let(::listOf) ?: it
         }, escapers = {
             listOf(BracketEscaper('[', ']'))
+        })
+        mfsjeaForce = mfsjea.extend(graders = {
+            it - AsciiGrader - IncompleteWordGrader
         })
     }
 
@@ -99,5 +105,6 @@ class Chatter private constructor(private val uuid: UUID) {
         "specified-output" to outputKeyboard?.name
     )
 
-    fun jeamfs(sentence: String): ConversionResult = mfsjea.jeamfsAuto(sentence)
+    fun jeamfs(sentence: String, force: Boolean): ConversionResult =
+        (if (force) mfsjeaForce else mfsjea).jeamfsAuto(sentence)
 }

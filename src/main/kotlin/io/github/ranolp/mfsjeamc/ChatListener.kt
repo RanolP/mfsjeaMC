@@ -13,6 +13,10 @@ object ChatListener : Listener {
         if (event is MfsjeaCompatChatEvent) {
             return
         }
+        if (event.message[0] == '^') {
+            event.message = event.message.substring(1)
+            return
+        }
 
         val chatter = Chatter(event.player)
 
@@ -22,9 +26,12 @@ object ChatListener : Listener {
 
         event.isCancelled = true
 
-        val converted = chatter.jeamfs(event.message)
+        val converted =
+            if (event.message[0] == '!') chatter.jeamfs(event.message.substring(1), true)
+            else chatter.jeamfs(event.message, false)
 
-        val compatEvent = MfsjeaCompatChatEvent(event.isAsynchronous, event.player, converted.sentence, event.recipients)
+        val compatEvent =
+            MfsjeaCompatChatEvent(event.isAsynchronous, event.player, converted.sentence, event.recipients)
         Bukkit.getPluginManager().callEvent(compatEvent)
         if (!compatEvent.isCancelled) {
             sendMessage(

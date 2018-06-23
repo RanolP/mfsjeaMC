@@ -1,6 +1,9 @@
 package io.github.ranolp.mfsjeamc.command
 
 import io.github.ranolp.mfsjea.Mfsjea
+import io.github.ranolp.mfsjea.escaper.BracketEscaper
+import io.github.ranolp.mfsjea.grader.AsciiGrader
+import io.github.ranolp.mfsjea.grader.IncompleteWordGrader
 import io.github.ranolp.mfsjeamc.Chatter
 import io.github.ranolp.mfsjeamc.sendMessage
 import org.bukkit.Bukkit
@@ -11,6 +14,13 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 object EnkoCommand : CommandExecutor {
+    val mfsjea = Mfsjea.DEFAULT.extend(escapers = {
+        listOf(BracketEscaper('[', ']'))
+    })
+    val mfsjeaForce = mfsjea.extend(graders = {
+        it - AsciiGrader - IncompleteWordGrader
+    })
+
     override fun onCommand(
         sender: CommandSender,
         command: Command,
@@ -35,10 +45,13 @@ object EnkoCommand : CommandExecutor {
                 }
             )
         } else {
+            val message = args.joinToString(" ")
             val converted = if (sender !is Player) {
-                Mfsjea.DEFAULT.jeamfsAuto(args.joinToString(" "))
+                if (message[0] == '!') mfsjea.jeamfsAuto(message.substring(1))
+                else mfsjeaForce.jeamfsAuto(message)
             } else {
-                Chatter(sender).jeamfs(args.joinToString(" "))
+                if (message[0] == '!') Chatter(sender).jeamfs(message.substring(1), true)
+                else Chatter(sender).jeamfs(message, false)
             }
 
             sendMessage(sender.name, "<%s> %s", args.joinToString(" "), converted, Bukkit.getOnlinePlayers())
