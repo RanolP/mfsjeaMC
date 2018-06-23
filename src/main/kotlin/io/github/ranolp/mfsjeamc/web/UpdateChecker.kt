@@ -31,7 +31,7 @@ object UpdateChecker {
         failure: () -> Unit = {},
         success: ReleaseInfo.() -> Unit
     ) {
-        getReleaseInfo(owner, repo, fileName, requireUpdateLog) {
+        getReleaseInfo(owner, repo, fileName, requireUpdateLog, failure) {
             if (version > Version.valueOf(pluginDescriptionFile.version)) {
                 success()
             }
