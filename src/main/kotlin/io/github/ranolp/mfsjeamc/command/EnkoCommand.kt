@@ -47,8 +47,8 @@ object EnkoCommand : CommandExecutor {
         } else {
             val message = args.joinToString(" ")
             val converted = if (sender !is Player) {
-                if (message[0] == '!') mfsjea.jeamfsAuto(message.substring(1))
-                else mfsjeaForce.jeamfsAuto(message)
+                if (message[0] == '!') mfsjeaForce.jeamfsAuto(message.substring(1))
+                else mfsjea.jeamfsAuto(message)
             } else {
                 if (message[0] == '!') Chatter(sender).jeamfs(message.substring(1), true)
                 else Chatter(sender).jeamfs(message, false)
