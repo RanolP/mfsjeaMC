@@ -1,0 +1,24 @@
+# mfsjeaMC @versipn@ configuration
+#
+# Enum values:
+#   MessageFormat:
+#     HIDE // do not show the original text
+#     NEXT // Show the original text next the converted text.
+#     TOOLTIP // Show the original text with tooltip.
+#
+# message-format: // The setting that edits format of message
+#   short-criteria: int = 1 // The criteria of 'short word'
+#   short: HIDE|NEXT|TOOLTIP = NEXT // The short message format
+#   long: HIDE|NEXT|TOOLTIP = TOOLTIP // The long message format
+# escaper:
+#   use: true|false = true // Whether to uses the Escaper
+#   start: char = '[' // The start of escaper group, must be one character
+#   end: char = ']' // The end of escaper group, must be one character
+message-format:
+  short-criteria: 1
+  short: NEXT
+  long: TOOLTIP
+escaper:
+  use: true
+  start: '['
+  end: ']'
