@@ -21,7 +21,7 @@ object UpdateAlertListener : Listener {
         }
         notified += player.uniqueId
         MfsjeaMC.releaseInfo?.let {
-            player.sendMessage("${ChatColor.GOLD}[!] ${ChatColor.WHITE}mfsjea의 새 업데이트가 있습니다.")
+            player.sendMessage("${ChatColor.GOLD}[!] ${ChatColor.WHITE}mfsjeaMC의 새 업데이트가 있습니다.")
             player.sendMessage("  ${ChatColor.GRAY}${MfsjeaMC.getInstance().description.version} → ${it.version}")
             player.sendMessage("${ChatColor.AQUA}[업데이트 로그]")
             it.updateLog.split('\n').map { "  ${it.trim()}" }.forEach(player::sendMessage)
