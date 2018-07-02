@@ -31,18 +31,18 @@ class MfsjeaMC : JavaPlugin() {
         getCommand("keyboard").executor = KeyboardCommand
         getCommand("reloadconfig").executor = ReloadConfigCommand
 
-        logger.info("${ChatColor.YELLOW}[…] ${ChatColor.WHITE}mfsjea의 업데이트를 확인합니다...")
+        logger.info("${ChatColor.YELLOW}[…] ${ChatColor.WHITE}mfsjeaMC의 업데이트를 확인합니다...")
 
         UpdateChecker.check(description, "RanolP", "mfsjeaMC", failure = {
             if (it == UpdateChecker.FailureReason.ALREADY_LATEST) {
-                logger.info("${ChatColor.GREEN}[✔] ${ChatColor.WHITE}mfsjea가 최신 버전입니다.")
+                logger.info("${ChatColor.GREEN}[✔] ${ChatColor.WHITE}mfsjeaMC가 최신 버전입니다.")
             } else {
                 logger.severe(it.message)
             }
         }) {
             releaseInfo = this
 
-            logger.info("${ChatColor.GOLD}[!] ${ChatColor.WHITE}mfsjea의 새 업데이트가 있습니다.")
+            logger.info("${ChatColor.GOLD}[!] ${ChatColor.WHITE}mfsjeaMC의 새 업데이트가 있습니다.")
             logger.info("  ${ChatColor.GRAY}${description.version} → $version")
             logger.info("${ChatColor.AQUA}[업데이트 로그]")
             updateLog.split('\n').map { "  ${it.trim()}" }.forEach(logger::info)
