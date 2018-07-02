@@ -13,6 +13,10 @@ object ChatListener : Listener {
             return
         }
 
+        if (event.message.isNullOrEmpty()) {
+            return
+        }
+
         val chatter = Chatter(event.player)
 
         if (!chatter.useMfsjea) {
@@ -20,13 +24,22 @@ object ChatListener : Listener {
         }
 
         if (event.message[0] == '^') {
-            event.message = event.message.substring(1)
+            event.message = if (event.message.length == 1) {
+                "^"
+            } else {
+                event.message.substring(1)
+            }
             return
         }
 
-        val converted =
-            if (event.message[0] == '!') chatter.jeamfs(event.message.substring(1), true)
-            else chatter.jeamfs(event.message, false)
+        val (original, converted) =
+                if (event.message[0] == '!') event.message.substring(1).let { Pair(it, chatter.jeamfs(it, true)) }
+                else event.message.let { Pair(it, chatter.jeamfs(it, false)) }
+
+        if (converted.sentence == original) {
+            event.message = original
+            return
+        }
 
         val type =
             if (event.message.split(' ').size <= Configuration.MessageFormat.shortCriteria) {
@@ -38,7 +51,7 @@ object ChatListener : Listener {
         type.sender.sendMessage(
             chatter,
             event,
-            event.message,
+            original,
             converted
         )
     }
