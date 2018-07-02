@@ -87,7 +87,16 @@ class Chatter private constructor(private val uuid: UUID) {
         }, outputKeyboards = {
             outputKeyboard?.let(::listOf) ?: it
         }, escapers = {
-            listOf(BracketEscaper('[', ']'))
+            if (Configuration.Escaper.use) {
+                listOf(
+                    BracketEscaper(
+                        Configuration.Escaper.start,
+                        Configuration.Escaper.end
+                    )
+                )
+            } else {
+                emptyList()
+            }
         })
         mfsjeaForce = mfsjea.extend(graders = {
             it - AsciiGrader - IncompleteWordGrader

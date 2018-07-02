@@ -10,3 +10,7 @@ commands:
   keyboard:
     aliases: [키보드]
     description: "입력/출력 키보드를 고정합니다."
+  reloadconfig:
+    description: "설정 파일을 새로 불러옵니다."
+    permission: OP
+    permission-message: "§c[!] §f관리자만 사용 가능한 명령어입니다."
