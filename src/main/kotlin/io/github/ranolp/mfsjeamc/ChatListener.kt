@@ -66,23 +66,25 @@ object ChatListener : Listener {
 
         val chatter = Chatter(event.player)
 
-        if(event.tabCompletions.isNotEmpty()) {return
-}
+        if(event.tabCompletions.isNotEmpty()) {
+            return
+        }
 
         val converted =
                 if (event.lastToken[0] == '!') event.lastToken.substring(1).let { chatter.jeamfsList(it, true) }
                 else event.lastToken.let { chatter.jeamfsList(it, false) }
 
-        event.tabCompletions += converted.sortedByDescending {
+        val completions = converted.asSequence().sortedByDescending {
             it.score
         }.filter {
             chatter.inputKeyboard != null || chatter.outputKeyboard != null || it.score > 0
         }.map {
             it.sentence
-        }.distinct()
+        }.distinct().toMutableList()
 
         if(event.lastToken !in event.tabCompletions) {
-            event.tabCompletions += event.lastToken
+            completions.add(0, event.lastToken)
         }
+        event.tabCompletions += completions
     }
 }
