@@ -18,7 +18,7 @@ class MfsjeaMC : JavaPlugin() {
     companion object {
         internal var releaseInfo: UpdateChecker.ReleaseInfo? = null
 
-        fun getInstance(): MfsjeaMC = JavaPlugin.getPlugin(MfsjeaMC::class.java)
+        fun getInstance(): MfsjeaMC = getPlugin(MfsjeaMC::class.java)
     }
 
     override fun onEnable() {
