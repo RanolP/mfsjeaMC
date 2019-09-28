@@ -89,10 +89,10 @@ class Chatter private constructor(private val uuid: UUID) {
         }, escapers = {
             if (Configuration.Escaper.use) {
                 listOf(
-                    BracketEscaper(
-                        Configuration.Escaper.start,
-                        Configuration.Escaper.end
-                    )
+                        BracketEscaper(
+                                Configuration.Escaper.start,
+                                Configuration.Escaper.end
+                        )
                 )
             } else {
                 emptyList()
@@ -109,11 +109,14 @@ class Chatter private constructor(private val uuid: UUID) {
     }
 
     fun serialize(): Map<String, Any?> = mapOf(
-        "use-mfsjea" to useMfsjea,
-        "specified-input" to inputKeyboard?.name,
-        "specified-output" to outputKeyboard?.name
+            "use-mfsjea" to useMfsjea,
+            "specified-input" to inputKeyboard?.name,
+            "specified-output" to outputKeyboard?.name
     )
 
     fun jeamfs(sentence: String, force: Boolean): ConversionResult =
-        (if (force) mfsjeaForce else mfsjea).jeamfsAuto(sentence)
+            (if (force) mfsjeaForce else mfsjea).jeamfsAuto(sentence)
+
+    fun jeamfsList(sentence: String, force: Boolean): List<ConversionResult> =
+            (if (force) mfsjeaForce else mfsjea).jeamfsList(sentence)
 }
