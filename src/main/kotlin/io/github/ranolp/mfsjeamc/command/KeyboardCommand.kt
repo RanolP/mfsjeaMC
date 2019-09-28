@@ -55,8 +55,8 @@ object KeyboardCommand : TabExecutor {
             "state" -> {
                 val chatter = Chatter(sender)
                 sender.sendMessage("${ChatColor.GREEN}[#] ${ChatColor.WHITE}당신의 키보드 상태")
-                sender.sendMessage("   ${ChatColor.GRAY}입력 키보드 ${chatter.inputKeyboard?.name ?: "없음"}")
-                sender.sendMessage("   ${ChatColor.GRAY}출력 키보드 ${chatter.outputKeyboard?.name ?: "없음"}")
+                sender.sendMessage("   ${ChatColor.WHITE}입력 키보드 ${chatter.inputKeyboard?.name ?: "없음"}")
+                sender.sendMessage("   ${ChatColor.WHITE}출력 키보드 ${chatter.outputKeyboard?.name ?: "없음"}")
             }
             else -> {
                 sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}/$label <input/output> [키보드 레이아웃 이름] 혹은 /$label state로 사용해주세요!")
