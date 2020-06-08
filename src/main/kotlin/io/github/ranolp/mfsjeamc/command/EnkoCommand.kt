@@ -54,7 +54,8 @@ object EnkoCommand : CommandExecutor {
                                     "${ChatColor.YELLOW}* ${ChatColor.WHITE}/${label} ${ChatColor.GREEN}help ${ChatColor.AQUA}- ${ChatColor.WHITE}이 도움말을 보여줍니다.",
                                     "${ChatColor.YELLOW}* ${ChatColor.WHITE}/${label} ${ChatColor.GREEN}on/enable [-q]${if(sender.isOp) " [players...]" else ""} ${ChatColor.AQUA}- ${ChatColor.WHITE}영한 자동 변환을 켭니다.",
                                     "${ChatColor.YELLOW}* ${ChatColor.WHITE}/${label} ${ChatColor.GREEN}off/disable [-q]${if(sender.isOp) " [players...]" else ""} ${ChatColor.AQUA}- ${ChatColor.WHITE}영한 자동 변환을 끕니다.",
-                                    "${ChatColor.YELLOW}* ${ChatColor.WHITE}/${label} ${ChatColor.GREEN}chat ${ChatColor.AQUA}- ${ChatColor.WHITE}메시지를 변환합니다."
+                                    "${ChatColor.YELLOW}* ${ChatColor.WHITE}/${label} ${ChatColor.GREEN}chat ${ChatColor.AQUA}- ${ChatColor.WHITE}메시지를 변환합니다.",
+                                    "${ChatColor.YELLOW}* ${ChatColor.WHITE}/${label} ${ChatColor.GREEN}word ${ChatColor.AQUA}- ${ChatColor.WHITE}단어 단위 변환을 켜거나 끕니다."
                             )
                     )
                 }
@@ -67,7 +68,7 @@ object EnkoCommand : CommandExecutor {
                             "-q" -> quiet = true
                             else -> {
                                 if (!sender.isOp) {
-                                    sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}잘못된 인자입니다: ${argument}")
+                                    sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}잘못된 인자입니다: $argument")
                                     hasError = true
                                     continue@loop
                                 }
@@ -162,6 +163,24 @@ object EnkoCommand : CommandExecutor {
                     }
 
                     sendMessage(sender.name, "<%s> %s", args.joinToString(" "), converted, Bukkit.getOnlinePlayers())
+                }
+                "word" -> {
+                    if (sender !is Player) {
+                        sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}플레이어만 사용 가능한 명령어입니다.")
+                        return true
+                    }
+
+                    val chatter = Chatter(sender)
+                    chatter.byWord = !chatter.byWord
+                    chatter.save()
+
+                    sender.sendMessage(
+                            if (chatter.useMfsjea) {
+                                "${ChatColor.GREEN}[#] ${ChatColor.WHITE}이제 단어 단위 변환을 사용합니다."
+                            } else {
+                                "${ChatColor.GRAY}[#] ${ChatColor.WHITE}이제 단어 단위 변환을 사용하지 않습니다."
+                            }
+                    )
                 }
                 else -> {
                     sender.sendMessage("${ChatColor.RED}[!] ${ChatColor.WHITE}/${label} help로 도움말을 확인하세요")

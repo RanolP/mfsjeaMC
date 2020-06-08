@@ -48,6 +48,7 @@ class Chatter private constructor(private val uuid: UUID) {
                 outputKeyboard = keyboard
             }
         }
+
         updateMfsjea()
     }
 
@@ -68,6 +69,14 @@ class Chatter private constructor(private val uuid: UUID) {
         }
     @set:JvmName("specify")
     var outputKeyboard: OutputKeyboard? = null
+        set(value) {
+            field = value
+            updateMfsjea()
+            save()
+        }
+    @get:JvmName("byWord")
+    @set:JvmName("byWord")
+    var byWord: Boolean = false
         set(value) {
             field = value
             updateMfsjea()
@@ -97,7 +106,7 @@ class Chatter private constructor(private val uuid: UUID) {
             } else {
                 emptyList()
             }
-        })
+        }, byWord = byWord)
         mfsjeaForce = mfsjea.extend(graders = {
             it - AsciiGrader - IncompleteWordGrader
         })
@@ -111,7 +120,8 @@ class Chatter private constructor(private val uuid: UUID) {
     fun serialize(): Map<String, Any?> = mapOf(
             "use-mfsjea" to useMfsjea,
             "specified-input" to inputKeyboard?.name,
-            "specified-output" to outputKeyboard?.name
+            "specified-output" to outputKeyboard?.name,
+            "by-word" to byWord
     )
 
     fun jeamfs(sentence: String, force: Boolean): ConversionResult =
