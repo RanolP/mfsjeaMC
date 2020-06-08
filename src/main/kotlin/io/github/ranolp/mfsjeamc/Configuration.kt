@@ -11,7 +11,7 @@ internal object Configuration {
 
     object Escaper {
         var use: Boolean = true
-        var start = '['
-        var end = ']'
+        var start: Char = '['
+        var end: Char = ']'
     }
 }

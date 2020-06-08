@@ -26,12 +26,12 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.3.72'
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.3.72'
 
-    compile group: 'org.spigotmc', name: 'spigot-api', version: '1.12.2-R0.1-SNAPSHOT'
-    compile group: 'io.github.ranolp', name: 'mfsjea.jvm', version: '1.0.1'
+    implementation group: 'org.spigotmc', name: 'spigot-api', version: '1.12.2-R0.1-SNAPSHOT'
+    implementation group: 'io.github.ranolp', name: 'mfsjea.jvm', version: '2.0.1'
 
-    compile group: 'com.github.zafarkhaja', name: 'java-semver', version: '0.9.0'
+    implementation group: 'com.github.zafarkhaja', name: 'java-semver', version: '0.9.0'
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
